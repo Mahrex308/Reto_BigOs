@@ -51,6 +51,9 @@ int LightCTRL = 0;
 Cubo Agents[16];
 int AnextNode[16] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 
+int light1Counter, light2Counter;
+int previousNode;
+
 char* fondo = "texturene24.bmp";
 
 
@@ -432,7 +435,22 @@ void display(){
     Agents[i].draw();
     if (!checkStop(Agents[i].Position[0], Agents[i].Position[2]) && !checkCollision(i))
     {
+      previousNode = AnextNode[i];
       AnextNode[i] = Agents[i].update(LocNodos, TransitionMatrix, AnextNode[i], speed);
+      if ((AnextNode[i] == 13 || AnextNode[i] == 15 || AnextNode[i] == 18 ||
+          AnextNode[i] == 26) && previousNode != AnextNode[i])
+      {
+        light1Counter++;
+        cout << "Numero de cruces en el primer semaforo : " << light1Counter << "\n";
+      }
+
+      if ((AnextNode[i] == 4 || AnextNode[i] == 30 || AnextNode[i] == 7) && 
+          previousNode != AnextNode[i])
+      {
+        light2Counter++;
+        cout << "Numero de cruces en el segundo semaforo : " << light2Counter << "\n";
+      }
+      
     }
     
   }
